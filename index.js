@@ -15,12 +15,15 @@ function init() {
     ? canvas.height / 3
     : canvas.width / 3;
 
-  n = 30;
+  n = 5;
 
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   drawCenterCircle();
   drawPointsForN(n);
+  connectAllPoints(
+    getPointsForN(n)
+  )
 
 }
 
@@ -36,6 +39,23 @@ function drawCenterCircle() {
 
 function getCanvasCenter() {
   return { x: canvas.width / 2, y: canvas.height / 2 };
+}
+
+function connectAllPoints(points) {
+
+  ctx.strokeStyle = 'white';
+
+  points.forEach(point => {
+
+    points.forEach(otherPoint => {
+      ctx.beginPath();
+      ctx.moveTo(point.x, point.y);
+      ctx.lineTo(otherPoint.x, otherPoint.y);
+      ctx.stroke();
+    });
+
+  });
+
 }
 
 function drawPointsForN(n) {
