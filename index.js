@@ -12,10 +12,10 @@ ctx.imageSmoothingQuality = 'high';
 function init() {
 
   circleRadius = canvas.width > canvas.height
-    ? canvas.height / 3
-    : canvas.width / 3;
+    ? canvas.height / 2.5
+    : canvas.width / 2.5;
 
-  n = 5;
+  n = 36;
 
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
