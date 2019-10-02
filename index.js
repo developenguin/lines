@@ -19,21 +19,10 @@ function init() {
 
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  drawCenterCircle();
-  drawPointsForN(n);
+
   connectAllPoints(
     getPointsForN(n)
   )
-
-}
-
-function drawCenterCircle() {
-
-  const center = getCanvasCenter();
-  ctx.strokeStyle = 'white';
-  ctx.beginPath();
-  ctx.arc(center.x, center.y, circleRadius, 0, Math.PI * 2);
-  ctx.stroke();
 
 }
 
@@ -54,20 +43,6 @@ function connectAllPoints(points) {
       ctx.stroke();
     });
 
-  });
-
-}
-
-function drawPointsForN(n) {
-
-  const points = getPointsForN(n);
-
-  ctx.fillStyle = 'white';
-
-  points.forEach(point => {
-    ctx.beginPath();
-    ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
-    ctx.fill();
   });
 
 }
