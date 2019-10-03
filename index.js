@@ -2,11 +2,6 @@ const canvas = document.getElementById('app'),
       ctx = canvas.getContext('2d'),
       pointsInput = document.getElementById('points');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-ctx.imageSmoothingEnabled = true;
-ctx.imageSmoothingQuality = 'high';
-
 function registerEventListeners() {
 
   pointsInput.addEventListener('change', () => {
@@ -20,6 +15,8 @@ function registerEventListeners() {
     );
 
   });
+
+  onresize = () => init();
 
 }
 
@@ -48,6 +45,11 @@ function getNValue() {
 }
 
 function resetCanvas() {
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
