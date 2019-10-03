@@ -1,28 +1,56 @@
 const canvas = document.getElementById('app'),
-      ctx = canvas.getContext('2d');
-
-let circleRadius,
-    n;
+      ctx = canvas.getContext('2d'),
+      pointsInput = document.getElementById('points');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 ctx.imageSmoothingEnabled = true;
 ctx.imageSmoothingQuality = 'high';
 
+function registerEventListeners() {
+
+  pointsInput.addEventListener('change', () => {
+
+    resetCanvas();
+
+    const n = getNValue();
+
+    connectAllPoints(
+      getPointsForN(n)
+    );
+
+  });
+
+}
+
 function init() {
 
-  circleRadius = canvas.width > canvas.height
-    ? canvas.height / 2.5
-    : canvas.width / 2.5;
+  const n = getNValue();
 
-  n = 36;
-
-  ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  resetCanvas();
 
   connectAllPoints(
     getPointsForN(n)
-  )
+  );
+
+  registerEventListeners();
+
+}
+
+function getNValue() {
+
+  const n = parseInt(pointsInput.value, 10);
+
+  document.getElementById('points-label').innerText = `${n}`;
+
+  return n;
+
+}
+
+function resetCanvas() {
+
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 }
 
@@ -51,7 +79,10 @@ function getPointsForN(n) {
 
   const points = [],
         center = getCanvasCenter(),
-        segmentAngle = 2 * Math.PI / n;
+        segmentAngle = 2 * Math.PI / n,
+        circleRadius = canvas.width > canvas.height
+          ? canvas.height / 2.5
+          : canvas.width / 2.5;
 
   for (let i = 1; i <= n; i++) {
     points.push({
