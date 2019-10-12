@@ -2,6 +2,7 @@ body {
   margin: 0;
   position: relative;
   font-family: Arial, sans-serif;
+  font-size: 16pt;
 }
 
 canvas {
@@ -37,8 +38,16 @@ label {
 
 @media screen and (max-width: 992px) {
 
+  body {
+    font-size: 24pt;
+  }
+
   .points-container, .color-container {
     width: 50%;
+  }
+
+  #points {
+    height: 50px;
   }
 
 }
