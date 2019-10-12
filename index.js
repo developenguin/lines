@@ -4,7 +4,7 @@ const canvas = document.getElementById('app'),
 
 function registerEventListeners() {
 
-  pointsInput.addEventListener('change', () => {
+  pointsInput.addEventListener('input', () => {
 
     resetCanvas();
 
