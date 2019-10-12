@@ -76,6 +76,7 @@ function connectAllPoints(points) {
 
 }
 
+// Adjusted slightly from http://boltkey.cz/graph
 function getColor(rat, n) {
 
   const radius = getCircleRadius();
