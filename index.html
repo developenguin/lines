@@ -9,8 +9,14 @@
 <body>
   <canvas id="app"></canvas>
   <div id="controls">
-    <label for="points">Points: <span id="points-label"></span></label>
-    <input id="points" type="range" min="2" max="300" value="10" />
+    <div class="points-container">
+      <label for="points">Points: <span id="points-label"></span></label>
+      <input id="points" type="range" min="2" max="300" value="10" />
+    </div>
+    <div class="color-container">
+      <label for="color">Colorize</label>
+      <input type="checkbox" id="color">
+    </div>
   </div>
   <script src="./index.js" type="text/javascript"></script>
 </body>

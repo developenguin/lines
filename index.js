@@ -1,26 +1,25 @@
 const canvas = document.getElementById('app'),
       ctx = canvas.getContext('2d'),
-      pointsInput = document.getElementById('points');
+      pointsInput = document.getElementById('points'),
+      colorizeInput = document.getElementById('color');
 
 function registerEventListeners() {
 
-  pointsInput.addEventListener('input', () => {
+  pointsInput.addEventListener('input', () => redrawCanvas());
+  colorizeInput.addEventListener('input', () => redrawCanvas());
 
-    resetCanvas();
-
-    const n = getNValue();
-
-    connectAllPoints(
-      getPointsForN(n)
-    );
-
-  });
-
-  onresize = () => init();
+  onresize = () => redrawCanvas();
 
 }
 
 function init() {
+
+  redrawCanvas();
+  registerEventListeners();
+
+}
+
+function redrawCanvas() {
 
   const n = getNValue();
 
@@ -29,8 +28,6 @@ function init() {
   connectAllPoints(
     getPointsForN(n)
   );
-
-  registerEventListeners();
 
 }
 
@@ -62,15 +59,9 @@ function getCanvasCenter() {
 
 function connectAllPoints(points) {
 
-  const colors = getColorsForN(points.length);
-  ctx.strokeStyle = `rgba(255, 255, 255, ${1/(points.length/10)})`;
-
-
-
   points.forEach((point, idx) => {
 
-    const color = colors[idx % colors.length];
-    ctx.strokeStyle = `hsla(${color.h}, ${color.s * 100}%, ${color.l * 100}%)`;
+    ctx.strokeStyle = getColor(idx/points.length, points.length);
 
     points.forEach((otherPoint, otherIdx) => {
 
@@ -82,6 +73,24 @@ function connectAllPoints(points) {
     });
 
   });
+
+}
+
+function getColor(rat, n) {
+
+  const radius = getCircleRadius();
+
+  const a = Math.max(0.03, Math.min(1, (radius * 2 / 80000) * Math.max(1, 5 * (-Math.sqrt(n * 0.5) + 10))));
+
+  if (!colorizeInput.checked) {
+    return `rgba(255, 255, 255, ${a})`;
+  }
+
+  const r = Math.max(0, Math.min(255, 255 - Math.floor(Math.abs(256 - 768 * rat))));
+  const g = Math.max(0, Math.min(255, 255 - Math.floor(Math.abs(512 - 768 * rat))));
+  const b = Math.max(0, Math.min(255, Math.floor(Math.abs(384 - 768 * rat)) - 768/6));
+
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
 
 }
 
@@ -103,27 +112,10 @@ function getPointsForN(n) {
 
 }
 
-function getColorsForN(n) {
-
-  const segmentAngleDegrees = 2 * Math.PI / n * 180 / Math.PI,
-        colors = [];
-
-  for (let i = 1; i <= n; i++) {
-    colors.push({
-      h: i * segmentAngleDegrees,
-      s: 100 / i,
-      l: 0.5
-    });
-  }
-
-  return colors;
-
-}
-
 function getCircleRadius() {
   return canvas.width > canvas.height
-    ? canvas.height / 2.5
-    : canvas.width / 2.5;
+    ? canvas.height / 2.25
+    : canvas.width / 2.25;
 }
 
 window.onload = () => init();
